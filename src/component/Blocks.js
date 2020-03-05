@@ -1,7 +1,12 @@
 import React from "react";
 import { Form, TextArea, Button } from "semantic-ui-react";
 
-const Blocks = ({ topicSubtopicArray, blockArray, updateArticleState }) => {
+const Blocks = ({
+  topicSubtopicArray,
+  topicSubtopicIndex,
+  blockArray,
+  updateArticleState
+}) => {
   const jsxArray = blockArray.map((block, blockIndex) => {
     return (
       <Form key={blockIndex}>
@@ -9,10 +14,14 @@ const Blocks = ({ topicSubtopicArray, blockArray, updateArticleState }) => {
           value={block}
           onChange={e => blockChange(e.target.value, blockIndex)}
         />
-        <Button
-          onClick={() => addBlock(Number(blockIndex))}
-          icon="plus circle"
-        />
+        {topicSubtopicIndex ? (
+          <span>
+            <Button onClick={() => addBlock(blockIndex)} icon="plus circle" />
+            <Button onClick={() => deleteBlock(blockIndex)} icon="trash" />
+          </span>
+        ) : (
+          ""
+        )}
       </Form>
     );
   });
@@ -24,6 +33,11 @@ const Blocks = ({ topicSubtopicArray, blockArray, updateArticleState }) => {
 
   const addBlock = index => {
     blockArray.splice(index + 1, 0, "");
+    updateArticleState(topicSubtopicArray);
+  };
+
+  const deleteBlock = index => {
+    blockArray.splice(index, 1);
     updateArticleState(topicSubtopicArray);
   };
 
