@@ -11,7 +11,7 @@ class Dashboard extends React.Component {
           onClick={createNewArticle}
           icon="plus circle"
           aria-label="Create New Article"
-        ></Button>
+        />
       </Container>
     );
   };
