@@ -1,5 +1,5 @@
 import React from "react";
-import { Container, Input, Button } from "semantic-ui-react";
+import { Container, Input, Button, Divider } from "semantic-ui-react";
 import Blocks from "../component/Blocks";
 
 const Article = ({ topicSubtopicArray, updateArticleState }) => {
@@ -33,6 +33,7 @@ const Article = ({ topicSubtopicArray, updateArticleState }) => {
             blockArray={blockArray}
             updateArticleState={updateArticleState}
           />
+          <Divider section hidden />
         </Container>
       );
     }

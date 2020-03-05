@@ -1,5 +1,7 @@
 import React from "react";
-import { Form, TextArea, Button } from "semantic-ui-react";
+import { Container, Button } from "semantic-ui-react";
+import CKEditor from "@ckeditor/ckeditor5-react";
+import Editor from "@ckeditor/ckeditor5-build-classic";
 
 const Blocks = ({
   topicSubtopicArray,
@@ -9,10 +11,13 @@ const Blocks = ({
 }) => {
   const jsxArray = blockArray.map((block, blockIndex) => {
     return (
-      <Form key={blockIndex}>
-        <TextArea
-          value={block}
-          onChange={e => blockChange(e.target.value, blockIndex)}
+      <Container key={blockIndex}>
+        <CKEditor
+          editor={Editor}
+          data={block}
+          onChange={(event, editor) =>
+            blockChange(editor.getData(), blockIndex)
+          }
         />
         {topicSubtopicIndex ? (
           <span>
@@ -22,7 +27,7 @@ const Blocks = ({
         ) : (
           ""
         )}
-      </Form>
+      </Container>
     );
   });
 
