@@ -3,6 +3,8 @@ import { Container, Button } from "semantic-ui-react";
 import CKEditor from "@ckeditor/ckeditor5-react";
 import Editor from "@ckeditor/ckeditor5-build-classic";
 
+console.log(Editor.builtinPlugins.map(plugin => plugin.pluginName));
+
 const Blocks = ({
   topicSubtopicArray,
   topicSubtopicIndex,
@@ -14,6 +16,18 @@ const Blocks = ({
       <Container key={blockIndex}>
         <CKEditor
           editor={Editor}
+          config={{
+            mediaEmbed: {
+              extraProviders: [
+                {
+                  name: "allow-all",
+                  url: /.*/,
+                  html: match =>
+                    `<video controls autoplay width="100%"><source src=${match} type="video/mp4"/></video>`
+                }
+              ]
+            }
+          }}
           data={block}
           onChange={(event, editor) =>
             blockChange(editor.getData(), blockIndex)
