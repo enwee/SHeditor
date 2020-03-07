@@ -14,7 +14,10 @@ class Editor extends React.Component {
         },
         {
           name: "I am a SubTopic",
-          blockArray: ["Block text 1", "Block text 2"]
+          blockArray: [
+            "Block text 1",
+            '<figure class="media"><oembed url="http://mirrors.standaloneinstaller.com/video-sample/dolbycanyon.m4v"></oembed></figure>'
+          ]
         }
       ]
     };
