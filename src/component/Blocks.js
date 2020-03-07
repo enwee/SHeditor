@@ -2,6 +2,7 @@ import React from "react";
 import { Container, Button } from "semantic-ui-react";
 import CKEditor from "@ckeditor/ckeditor5-react";
 import Editor from "@ckeditor/ckeditor5-build-classic";
+//import "./Blocks.css";
 
 console.log(Editor.builtinPlugins.map(plugin => plugin.pluginName));
 
@@ -18,14 +19,12 @@ const Blocks = ({
           editor={Editor}
           config={{
             mediaEmbed: {
-              extraProviders: [
-                {
-                  name: "allow-all",
-                  url: /.*/,
-                  html: match =>
-                    `<video controls autoplay width="100%"><source src=${match} type="video/mp4"/></video>`
-                }
-              ]
+              extraProviders: {
+                name: "allow-all",
+                url: /.*/,
+                html: match =>
+                  `<video controls autoplay width="100%"><source src=${match} /></video>`
+              }
             }
           }}
           data={block}
