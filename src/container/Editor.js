@@ -10,13 +10,13 @@ class Editor extends React.Component {
       isEditable: true,
       topicSubtopicArray: [
         {
-          name: "JumpStart Topic",
+          name: "JumpStart Stack",
           blockArray: [
             "<ul><li>MongoDB</li><li>Express JS</li><li>React</li><li>Node JS</li></ul>"
           ]
         },
         {
-          name: "I am a SubTopic",
+          name: "AWS/mp4 and Youtube Video",
           blockArray: [
             "Block Text that you can edit",
             '<figure class="media"><oembed url="https://snaphunt-videos.s3-ap-southeast-1.amazonaws.com/assets/for-employers-page/snaphunt-for-employers-page-descriptive-video.mp4"></oembed></figure>',

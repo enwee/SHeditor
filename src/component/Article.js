@@ -8,27 +8,31 @@ const Article = ({ isEditable, topicSubtopicArray, updateArticleState }) => {
       const { name, blockArray } = topicSubtopic;
       return (
         <Segment key={topicSubtopicIndex}>
-          <Input
-            size={topicSubtopicIndex ? "large" : "massive"}
-            fluid
-            value={name}
-            disabled={!isEditable}
-            onChange={e => nameChange(e.target.value, topicSubtopicIndex)}
-          ></Input>
-          {isEditable && topicSubtopicIndex ? (
-            <span>
-              <Button
-                onClick={() => addSubtopic(topicSubtopicIndex)}
-                icon="plus circle"
-              />
-              <Button
-                onClick={() => deleteSubtopic(topicSubtopicIndex)}
-                icon="trash"
-              />
-            </span>
-          ) : (
-            ""
-          )}
+          <Segment>
+            <Input
+              size={topicSubtopicIndex ? "big" : "massive"}
+              label={topicSubtopicIndex ? "SUBTOPIC" : "TOPIC"}
+              labelPosition="right"
+              fluid="true"
+              value={name}
+              disabled={!isEditable}
+              onChange={e => nameChange(e.target.value, topicSubtopicIndex)}
+            ></Input>
+            {isEditable && topicSubtopicIndex ? (
+              <span>
+                <Button
+                  onClick={() => addSubtopic(topicSubtopicIndex)}
+                  icon="plus circle"
+                />
+                <Button
+                  onClick={() => deleteSubtopic(topicSubtopicIndex)}
+                  icon="trash"
+                />
+              </span>
+            ) : (
+              ""
+            )}
+          </Segment>
           <Blocks
             isEditable={isEditable}
             topicSubtopicArray={topicSubtopicArray}

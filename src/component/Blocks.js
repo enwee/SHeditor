@@ -1,5 +1,5 @@
 import React from "react";
-import { Container, Button } from "semantic-ui-react";
+import { Button, Segment } from "semantic-ui-react";
 import CKEditor from "@ckeditor/ckeditor5-react";
 import Editor from "@ckeditor/ckeditor5-build-balloon-block";
 
@@ -14,7 +14,7 @@ const Blocks = ({
 }) => {
   const jsxArray = blockArray.map((block, blockIndex) => {
     return (
-      <Container key={blockIndex}>
+      <Segment key={blockIndex}>
         <CKEditor
           editor={Editor}
           config={{
@@ -41,7 +41,7 @@ const Blocks = ({
         ) : (
           ""
         )}
-      </Container>
+      </Segment>
     );
   });
 
