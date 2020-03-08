@@ -31,18 +31,18 @@ class Editor extends React.Component {
     this.setState({ topicSubtopicArray: newTopicSubtopicArray });
   };
 
-  toggleEditable = () => {
-    this.setState({ isEditable: !this.state.isEditable });
+  toggleEditable = bool => {
+    this.setState({ isEditable: bool });
   };
 
   render = () => {
     return (
       <Container>
-        <Button
-          onClick={() => this.toggleEditable()}
-          icon={this.state.isEditable ? "tv" : "edit"}
-          size="massive"
-        />
+        <Button.Group size="massive">
+          <Button onClick={() => this.toggleEditable(true)}>Edit</Button>
+          <Button.Or />
+          <Button onClick={() => this.toggleEditable(false)}>Read</Button>
+        </Button.Group>
         <Article
           isEditable={this.state.isEditable}
           topicSubtopicArray={this.state.topicSubtopicArray}

@@ -13,7 +13,7 @@ const Article = ({ isEditable, topicSubtopicArray, updateArticleState }) => {
               size={topicSubtopicIndex ? "big" : "massive"}
               label={topicSubtopicIndex ? "SUBTOPIC" : "TOPIC"}
               labelPosition="right"
-              fluid="true"
+              fluid
               value={name}
               disabled={!isEditable}
               onChange={e => nameChange(e.target.value, topicSubtopicIndex)}
