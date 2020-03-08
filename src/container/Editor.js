@@ -1,5 +1,5 @@
 import React from "react";
-import { Container } from "semantic-ui-react";
+import { Container, Button } from "semantic-ui-react";
 import Article from "../component/Article";
 
 class Editor extends React.Component {
@@ -7,16 +7,20 @@ class Editor extends React.Component {
     super(props);
     this.state = {
       id: this.props.articleId,
+      isEditable: true,
       topicSubtopicArray: [
         {
-          name: "I am a Topic",
-          blockArray: ["Block text 1"]
+          name: "JumpStart Topic",
+          blockArray: [
+            "<ul><li>MongoDB</li><li>Express JS</li><li>React</li><li>Node JS</li></ul>"
+          ]
         },
         {
           name: "I am a SubTopic",
           blockArray: [
+            "Block Text that you can edit",
             '<figure class="media"><oembed url="https://snaphunt-videos.s3-ap-southeast-1.amazonaws.com/assets/for-employers-page/snaphunt-for-employers-page-descriptive-video.mp4"></oembed></figure>',
-            '<figure class="media"><oembed url="http://mirrors.standaloneinstaller.com/video-sample/dolbycanyon.m4v"></oembed></figure>'
+            '<p>Hello how are you?</p><figure class="media"><oembed url="https://www.youtube.com/watch?v=nSGxQEpg07Q"></oembed></figure>'
           ]
         }
       ]
@@ -27,10 +31,20 @@ class Editor extends React.Component {
     this.setState({ topicSubtopicArray: newTopicSubtopicArray });
   };
 
+  toggleEditable = () => {
+    this.setState({ isEditable: !this.state.isEditable });
+  };
+
   render = () => {
     return (
       <Container>
+        <Button
+          onClick={() => this.toggleEditable()}
+          icon={this.state.isEditable ? "tv" : "edit"}
+          size="massive"
+        />
         <Article
+          isEditable={this.state.isEditable}
           topicSubtopicArray={this.state.topicSubtopicArray}
           updateArticleState={this.updateArticleState}
         />

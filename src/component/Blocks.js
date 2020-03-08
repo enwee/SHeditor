@@ -1,12 +1,12 @@
 import React from "react";
 import { Container, Button } from "semantic-ui-react";
 import CKEditor from "@ckeditor/ckeditor5-react";
-import Editor from "@ckeditor/ckeditor5-build-classic";
-//import "./Blocks.css";
+import Editor from "@ckeditor/ckeditor5-build-balloon-block";
 
-console.log(Editor.builtinPlugins.map(plugin => plugin.pluginName));
+//console.log(Editor.builtinPlugins.map(plugin => plugin.pluginName));
 
 const Blocks = ({
+  isEditable,
   topicSubtopicArray,
   topicSubtopicIndex,
   blockArray,
@@ -23,16 +23,17 @@ const Blocks = ({
                 name: "allow-all",
                 url: /.*/,
                 html: match =>
-                  `<video controls autoplay width="100%"><source src=${match} /></video>`
+                  `<video controls width="100%"><source src=${match} /></video>`
               }
             }
           }}
           data={block}
+          disabled={!isEditable}
           onChange={(event, editor) =>
             blockChange(editor.getData(), blockIndex)
           }
         />
-        {topicSubtopicIndex ? (
+        {isEditable && topicSubtopicIndex ? (
           <span>
             <Button onClick={() => addBlock(blockIndex)} icon="plus circle" />
             <Button onClick={() => deleteBlock(blockIndex)} icon="trash" />

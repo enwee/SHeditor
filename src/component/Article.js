@@ -1,19 +1,21 @@
 import React from "react";
-import { Container, Input, Button, Divider } from "semantic-ui-react";
+import { Segment, Input, Button } from "semantic-ui-react";
 import Blocks from "../component/Blocks";
 
-const Article = ({ topicSubtopicArray, updateArticleState }) => {
+const Article = ({ isEditable, topicSubtopicArray, updateArticleState }) => {
   const jsxArray = topicSubtopicArray.map(
     (topicSubtopic, topicSubtopicIndex) => {
       const { name, blockArray } = topicSubtopic;
       return (
-        <Container key={topicSubtopicIndex}>
+        <Segment key={topicSubtopicIndex}>
           <Input
-            size="large"
+            size={topicSubtopicIndex ? "large" : "massive"}
+            fluid
             value={name}
+            disabled={!isEditable}
             onChange={e => nameChange(e.target.value, topicSubtopicIndex)}
           ></Input>
-          {topicSubtopicIndex ? (
+          {isEditable && topicSubtopicIndex ? (
             <span>
               <Button
                 onClick={() => addSubtopic(topicSubtopicIndex)}
@@ -28,13 +30,13 @@ const Article = ({ topicSubtopicArray, updateArticleState }) => {
             ""
           )}
           <Blocks
+            isEditable={isEditable}
             topicSubtopicArray={topicSubtopicArray}
             topicSubtopicIndex={topicSubtopicIndex}
             blockArray={blockArray}
             updateArticleState={updateArticleState}
           />
-          <Divider section hidden />
-        </Container>
+        </Segment>
       );
     }
   );
