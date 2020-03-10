@@ -21,8 +21,7 @@ class Editor extends React.Component {
           blockArray: [
             testLongString,
             "Block Text that you can edit",
-            '<figure class="media"><oembed url="https://snaphunt-videos.s3-ap-southeast-1.amazonaws.com/assets/for-employers-page/snaphunt-for-employers-page-descriptive-video.mp4"></oembed></figure>',
-            '<p>Hello how are you?</p><figure class="media"><oembed url="https://www.youtube.com/watch?v=nSGxQEpg07Q"></oembed></figure>'
+            '<figure class="media"><oembed url="https://snaphunt-videos.s3-ap-southeast-1.amazonaws.com/assets/for-employers-page/snaphunt-for-employers-page-descriptive-video.mp4"></oembed></figure>'
           ]
         }
       ]

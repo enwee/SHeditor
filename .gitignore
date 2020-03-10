@@ -22,3 +22,5 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 /src/temp
+
+/src/component/ckeditor5/build/translations
