@@ -1,9 +1,8 @@
 import React from "react";
 import { Button, Segment } from "semantic-ui-react";
 import CKEditor from "@ckeditor/ckeditor5-react";
-import Editor from "@ckeditor/ckeditor5-build-balloon-block";
-
-//console.log(Editor.builtinPlugins.map(plugin => plugin.pluginName));
+import Editor from "../component/ckeditor";
+import ckeditor5Config from "../constants/ckeditor5Config";
 
 const Blocks = ({
   isEditable,
@@ -17,16 +16,7 @@ const Blocks = ({
       <Segment key={blockIndex}>
         <CKEditor
           editor={Editor}
-          config={{
-            mediaEmbed: {
-              extraProviders: {
-                name: "allow-all",
-                url: /.*/,
-                html: match =>
-                  `<video controls width="100%"><source src=${match} /></video>`
-              }
-            }
-          }}
+          config={ckeditor5Config}
           data={block}
           disabled={!isEditable}
           onChange={(event, editor) =>

@@ -1,6 +1,7 @@
 import React from "react";
 import { Container, Button } from "semantic-ui-react";
 import Article from "../component/Article";
+import testLongString from "../testData/testLongString";
 
 class Editor extends React.Component {
   constructor(props) {
@@ -18,6 +19,7 @@ class Editor extends React.Component {
         {
           name: "AWS/mp4 and Youtube Video",
           blockArray: [
+            testLongString,
             "Block Text that you can edit",
             '<figure class="media"><oembed url="https://snaphunt-videos.s3-ap-southeast-1.amazonaws.com/assets/for-employers-page/snaphunt-for-employers-page-descriptive-video.mp4"></oembed></figure>',
             '<p>Hello how are you?</p><figure class="media"><oembed url="https://www.youtube.com/watch?v=nSGxQEpg07Q"></oembed></figure>'
@@ -38,6 +40,13 @@ class Editor extends React.Component {
   render = () => {
     return (
       <Container>
+        <Button
+          onClick={() =>
+            console.log(this.state.topicSubtopicArray[0].blockArray[0])
+          }
+        >
+          Console log first block
+        </Button>
         <Button.Group size="massive">
           <Button onClick={() => this.toggleEditable(true)}>Edit</Button>
           <Button.Or />
