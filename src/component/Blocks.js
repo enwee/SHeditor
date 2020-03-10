@@ -1,8 +1,7 @@
 import React from "react";
 import { Button, Segment } from "semantic-ui-react";
 import CKEditor from "@ckeditor/ckeditor5-react";
-import Editor from "@ckeditor/ckeditor5-build-balloon-block";
-// import Editor from "./ckeditor5";
+import Editor from "@enwee/ckeditor5-build-balloon-block";
 import ckeditor5Config from "../constants/ckeditor5Config";
 
 const Blocks = ({

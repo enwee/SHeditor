@@ -9,6 +9,7 @@
   "dependencies": {
     "@ckeditor/ckeditor5-build-balloon-block": "^17.0.0",
     "@ckeditor/ckeditor5-react": "^2.1.0",
+    "@enwee/ckeditor5-build-balloon-block": "0.0.1",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.4.1",
     "@testing-library/user-event": "^7.2.1",
@@ -49,7 +50,8 @@
     "eslint-plugin-prettier": "^3.1.2",
     "eslint-plugin-react": "^7.18.3",
     "jest": "^24.9.0",
-    "prettier": "^1.19.1"
+    "prettier": "^1.19.1",
+    "serve": "^11.3.0"
   },
   "jest": {
     "collectCoverageFrom": [
