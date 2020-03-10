@@ -17,7 +17,7 @@ class Editor extends React.Component {
           ]
         },
         {
-          name: "AWS/mp4 and Youtube Video",
+          name: "Image/text and AWS/mp4",
           blockArray: [
             testLongString,
             "Block Text that you can edit",
