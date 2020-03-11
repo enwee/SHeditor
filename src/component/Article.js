@@ -1,13 +1,15 @@
 import React from "react";
 import { Segment, Input, Button } from "semantic-ui-react";
 import Blocks from "../component/Blocks";
+import { v4 as uuidv4 } from "uuid";
 
 const Article = ({ isEditable, topicSubtopicArray, updateArticleState }) => {
   const jsxArray = topicSubtopicArray.map(
     (topicSubtopic, topicSubtopicIndex) => {
-      const { name, blockArray } = topicSubtopic;
+      const showDelete = Boolean(isEditable && topicSubtopicIndex);
+      const { name, uuid, blockArray } = topicSubtopic;
       return (
-        <Segment key={topicSubtopicIndex}>
+        <Segment key={uuid}>
           <Segment>
             <Input
               size={topicSubtopicIndex ? "big" : "massive"}
@@ -18,25 +20,22 @@ const Article = ({ isEditable, topicSubtopicArray, updateArticleState }) => {
               disabled={!isEditable}
               onChange={e => nameChange(e.target.value, topicSubtopicIndex)}
             ></Input>
-            {isEditable && topicSubtopicIndex ? (
-              <span>
-                <Button
-                  onClick={() => addSubtopic(topicSubtopicIndex)}
-                  icon="plus circle"
-                />
-                <Button
-                  onClick={() => deleteSubtopic(topicSubtopicIndex)}
-                  icon="trash"
-                />
-              </span>
-            ) : (
-              ""
+            {isEditable && (
+              <Button
+                onClick={() => addSubtopic(topicSubtopicIndex)}
+                icon="plus circle"
+              />
+            )}
+            {showDelete && (
+              <Button
+                onClick={() => deleteSubtopic(topicSubtopicIndex)}
+                icon="trash"
+              />
             )}
           </Segment>
           <Blocks
             isEditable={isEditable}
             topicSubtopicArray={topicSubtopicArray}
-            topicSubtopicIndex={topicSubtopicIndex}
             blockArray={blockArray}
             updateArticleState={updateArticleState}
           />
@@ -52,8 +51,9 @@ const Article = ({ isEditable, topicSubtopicArray, updateArticleState }) => {
 
   const addSubtopic = index => {
     topicSubtopicArray.splice(index + 1, 0, {
+      uuid: uuidv4(),
       name: "",
-      blockArray: [""]
+      blockArray: [{ ckString: "", uuid: uuidv4() }]
     });
     updateArticleState(topicSubtopicArray);
   };
