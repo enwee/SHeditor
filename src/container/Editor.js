@@ -1,6 +1,7 @@
 import React from "react";
-import { Container, Button } from "semantic-ui-react";
+import { Container } from "semantic-ui-react";
 import Article from "../component/Article";
+import Header from "../component/Header";
 import testLongString from "../testData/testLongString";
 
 class Editor extends React.Component {
@@ -55,18 +56,11 @@ class Editor extends React.Component {
   render = () => {
     return (
       <Container>
-        <Button
-          onClick={() =>
-            console.log(this.state.topicSubtopicArray[0].blockArray[0])
-          }
-        >
-          Console log first block
-        </Button>
-        <Button.Group size="massive">
-          <Button onClick={() => this.toggleEditable(true)}>Edit</Button>
-          <Button.Or />
-          <Button onClick={() => this.toggleEditable(false)}>Read</Button>
-        </Button.Group>
+        <Header
+          showEditor={this.props.createNewArticle}
+          toggleEditable={this.toggleEditable}
+          isEditable={this.state.isEditable}
+        />
         <Article
           isEditable={this.state.isEditable}
           topicSubtopicArray={this.state.topicSubtopicArray}

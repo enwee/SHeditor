@@ -22,7 +22,10 @@ class App extends React.Component {
     return (
       <Container>
         {this.state.showEditor ? (
-          <Editor articleId={this.state.articleId} />
+          <Editor
+            createNewArticle={this.createNewArticle}
+            articleId={this.state.articleId}
+          />
         ) : (
           <Dashboard createNewArticle={this.createNewArticle} />
         )}

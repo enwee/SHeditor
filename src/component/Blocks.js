@@ -1,8 +1,9 @@
 import React from "react";
-import { Button, Segment } from "semantic-ui-react";
+import { Button, Segment, Label } from "semantic-ui-react";
 import CKEditor from "@ckeditor/ckeditor5-react";
 import Editor from "@enwee/ckeditor5-build-balloon-block";
 import ckeditor5Config from "../constants/ckeditor5Config";
+import Tooltip from "../component/Tooltip";
 import { v4 as uuidv4 } from "uuid";
 
 const Blocks = ({
@@ -15,6 +16,11 @@ const Blocks = ({
     const showDelete = Boolean(isEditable && blockIndex);
     return (
       <Segment key={block.uuid}>
+        {isEditable && (
+          <Label color="blue" ribbon>
+            Block
+          </Label>
+        )}
         <CKEditor
           editor={Editor}
           config={ckeditor5Config}
@@ -25,10 +31,14 @@ const Blocks = ({
           }
         />
         {isEditable && (
-          <Button onClick={() => addBlock(blockIndex)} icon="plus circle" />
+          <Tooltip text="Add Block">
+            <Button onClick={() => addBlock(blockIndex)} icon="plus circle" />
+          </Tooltip>
         )}
         {showDelete && (
-          <Button onClick={() => deleteBlock(blockIndex)} icon="trash" />
+          <Tooltip text="Delete Block">
+            <Button onClick={() => deleteBlock(blockIndex)} icon="trash" />
+          </Tooltip>
         )}
       </Segment>
     );
