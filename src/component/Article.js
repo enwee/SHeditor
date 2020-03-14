@@ -1,13 +1,6 @@
 import React from "react";
-import {
-  Segment,
-  Input,
-  Button,
-  Header,
-  Label,
-  Container
-} from "semantic-ui-react";
-import Tooltip from "../component/Tooltip";
+import { Segment, Input, Header, Label, Container } from "semantic-ui-react";
+import TooltipBtn from "../component/TooltipBtn";
 import Blocks from "../component/Blocks";
 import { v4 as uuidv4 } from "uuid";
 
@@ -25,13 +18,23 @@ const Article = ({ isEditable, topicSubtopicArray, updateArticleState }) => {
                   {topicSubtopicIndex ? "SUBTOPIC" : "TOPIC"}
                 </Label>
                 <Input
-                  as="h1"
                   size={topicSubtopicIndex ? "big" : "massive"}
                   fluid
                   value={name}
-                  font-weight="bold"
                   onChange={e => nameChange(e.target.value, topicSubtopicIndex)}
-                ></Input>
+                />
+                {/* <Input
+                  value={name}
+                  list="catergory"
+                  fluid
+                  placeholder="Choose or Enter new"
+                  onChange={e => nameChange(e.target.value, topicSubtopicIndex)}
+                />
+                <datalist id="catergory">
+                  {["English", "Chinese", "Dutch"].map(x => (
+                    <option value={x} />
+                  ))}
+                </datalist> */}
               </Container>
             ) : (
               <Header size={topicSubtopicIndex ? "medium" : "large"}>
@@ -39,20 +42,18 @@ const Article = ({ isEditable, topicSubtopicArray, updateArticleState }) => {
               </Header>
             )}
             {isEditable && (
-              <Tooltip text="Add Subtopic">
-                <Button
-                  onClick={() => addSubtopic(topicSubtopicIndex)}
-                  icon="plus circle"
-                />
-              </Tooltip>
+              <TooltipBtn
+                ttText="Add Subtopic"
+                icon="plus circle"
+                onClick={() => addSubtopic(topicSubtopicIndex)}
+              />
             )}
             {showDelete && (
-              <Tooltip text="Delete Subtopic">
-                <Button
-                  onClick={() => deleteSubtopic(topicSubtopicIndex)}
-                  icon="trash"
-                />
-              </Tooltip>
+              <TooltipBtn
+                ttText="Delete Subtopic"
+                icon="trash"
+                onClick={() => deleteSubtopic(topicSubtopicIndex)}
+              />
             )}
           </Segment>
           <Blocks
