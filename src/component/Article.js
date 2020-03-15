@@ -47,7 +47,7 @@ const Article = ({ isEditable, topicArray, updateArticleState }) => {
                 color="blue"
                 ribbon
                 size={topicIndex ? "large" : "big"}
-                content={topicIndex ? "SUBTOPIC" : "TOPIC"}
+                content={topicIndex ? `SUBTOPIC ${topicIndex}` : "TOPIC"}
               />
               <Input
                 size={topicIndex ? "big" : "massive"}

@@ -37,7 +37,9 @@ const Blocks = ({ isEditable, topicArray, blockArray, updateArticleState }) => {
   const jsxArray = blockArray.map((block, blockIndex) => {
     return (
       <Segment key={block.uuid}>
-        {isEditable && <Label color="blue" ribbon content="Block" />}
+        {isEditable && (
+          <Label color="blue" ribbon content={`Block ${blockIndex + 1}`} />
+        )}
         <CKEditor
           editor={CustomCKEditor}
           config={ckeditor5Config}
