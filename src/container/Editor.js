@@ -10,7 +10,7 @@ class Editor extends React.Component {
     this.state = {
       id: this.props.articleId,
       isEditable: true,
-      topicSubtopicArray: [
+      topicArray: [
         {
           uuid: "60b82fad-c009-41a8-b2f7-dc10c33f13af",
           name: "JumpStart Stack",
@@ -45,8 +45,8 @@ class Editor extends React.Component {
     };
   }
 
-  updateArticleState = newTopicSubtopicArray => {
-    this.setState({ topicSubtopicArray: newTopicSubtopicArray });
+  updateArticleState = newtopicArray => {
+    this.setState({ topicArray: newtopicArray });
   };
 
   toggleEditable = bool => {
@@ -64,7 +64,7 @@ class Editor extends React.Component {
         <Divider hidden section />
         <Article
           isEditable={this.state.isEditable}
-          topicSubtopicArray={this.state.topicSubtopicArray}
+          topicArray={this.state.topicArray}
           updateArticleState={this.updateArticleState}
         />
         <Divider hidden section />

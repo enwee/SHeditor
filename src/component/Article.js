@@ -1,91 +1,96 @@
 import React from "react";
 import { Segment, Input, Header, Label, Container } from "semantic-ui-react";
-import TooltipBtn from "../component/TooltipBtn";
+import ButtonsBar from "./ButtonsBar";
 import Blocks from "../component/Blocks";
 import { v4 as uuidv4 } from "uuid";
 
-const Article = ({ isEditable, topicSubtopicArray, updateArticleState }) => {
-  const jsxArray = topicSubtopicArray.map(
-    (topicSubtopic, topicSubtopicIndex) => {
-      const showDelete = Boolean(isEditable && topicSubtopicIndex);
-      const { name, uuid, blockArray } = topicSubtopic;
-      return (
-        <Segment key={uuid}>
-          <Segment>
-            {isEditable ? (
-              <Container>
-                <Label color="blue" ribbon>
-                  {topicSubtopicIndex ? "SUBTOPIC" : "TOPIC"}
-                </Label>
-                <Input
-                  size={topicSubtopicIndex ? "big" : "massive"}
-                  fluid
-                  value={name}
-                  onChange={e => nameChange(e.target.value, topicSubtopicIndex)}
-                />
-                {/* <Input
+const Article = ({ isEditable, topicArray, updateArticleState }) => {
+  const nameChange = (value, index) => {
+    topicArray[index].name = value;
+    updateArticleState(topicArray);
+  };
+
+  const addTopic = index => {
+    topicArray.splice(index + 1, 0, {
+      uuid: uuidv4(),
+      name: "",
+      blockArray: [{ ckString: "", uuid: uuidv4() }]
+    });
+    updateArticleState(topicArray);
+  };
+
+  const deleteTopic = index => {
+    topicArray.splice(index, 1);
+    updateArticleState(topicArray);
+  };
+
+  const topicUp = index => {
+    [topicArray[index - 1], topicArray[index]] = 
+    [topicArray[index], topicArray[index - 1]]; //prettier-ignore
+    updateArticleState(topicArray);
+  };
+
+  const topicDown = index => {
+    [topicArray[index], topicArray[index + 1]] = 
+    [topicArray[index + 1], topicArray[index]]; //prettier-ignore
+    updateArticleState(topicArray);
+  };
+
+  const jsxArray = topicArray.map((topic, topicIndex) => {
+    const { name, uuid, blockArray } = topic;
+    return (
+      <Segment key={uuid}>
+        <Segment>
+          {isEditable ? (
+            <Container>
+              <Label
+                color="blue"
+                ribbon
+                size={topicIndex ? "large" : "big"}
+                content={topicIndex ? "SUBTOPIC" : "TOPIC"}
+              />
+              <Input
+                size={topicIndex ? "big" : "massive"}
+                fluid
+                value={name}
+                onChange={e => nameChange(e.target.value, topicIndex)}
+              />
+              {/* <Input
                   value={name}
                   list="catergory"
                   fluid
-                  placeholder="Choose or Enter new"
-                  onChange={e => nameChange(e.target.value, topicSubtopicIndex)}
+                  placeholder="Choose or Enter new Cat"
+                  onChange={e => nameChange(e.target.value, topicIndex)}
                 />
                 <datalist id="catergory">
                   {["English", "Chinese", "Dutch"].map(x => (
                     <option value={x} />
                   ))}
                 </datalist> */}
-              </Container>
-            ) : (
-              <Header size={topicSubtopicIndex ? "medium" : "large"}>
-                {name}
-              </Header>
-            )}
-            {isEditable && (
-              <TooltipBtn
-                ttText="Add Subtopic"
-                icon="plus circle"
-                onClick={() => addSubtopic(topicSubtopicIndex)}
-              />
-            )}
-            {showDelete && (
-              <TooltipBtn
-                ttText="Delete Subtopic"
-                icon="trash"
-                onClick={() => deleteSubtopic(topicSubtopicIndex)}
-              />
-            )}
-          </Segment>
-          <Blocks
+            </Container>
+          ) : (
+            <Header size={topicIndex ? "medium" : "large"}>{name}</Header>
+          )}
+          <ButtonsBar
             isEditable={isEditable}
-            topicSubtopicArray={topicSubtopicArray}
-            blockArray={blockArray}
-            updateArticleState={updateArticleState}
+            type="Subtopic"
+            index={topicIndex}
+            lastIndex={topicArray.length - 1}
+            add={addTopic}
+            remove={deleteTopic}
+            moveUp={topicUp}
+            moveDown={topicDown}
           />
         </Segment>
-      );
-    }
-  );
-
-  const nameChange = (value, index) => {
-    topicSubtopicArray[index].name = value;
-    updateArticleState(topicSubtopicArray);
-  };
-
-  const addSubtopic = index => {
-    topicSubtopicArray.splice(index + 1, 0, {
-      uuid: uuidv4(),
-      name: "",
-      blockArray: [{ ckString: "", uuid: uuidv4() }]
-    });
-    updateArticleState(topicSubtopicArray);
-  };
-
-  const deleteSubtopic = index => {
-    topicSubtopicArray.splice(index, 1);
-    updateArticleState(topicSubtopicArray);
-  };
-
+        <Blocks
+          isEditable={isEditable}
+          topicArray={topicArray}
+          blockArray={blockArray}
+          updateArticleState={updateArticleState}
+        />
+      </Segment>
+    );
+  });
   return jsxArray;
 };
 

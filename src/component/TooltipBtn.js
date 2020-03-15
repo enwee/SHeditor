@@ -8,7 +8,8 @@ const TooltipBtn = ({
   onClick,
   aria,
   toggle,
-  active
+  active,
+  disabled
 }) => {
   return (
     <Popup
@@ -23,6 +24,7 @@ const TooltipBtn = ({
           aria-label={aria}
           toggle={toggle}
           active={active}
+          disabled={disabled}
         />
       }
     />

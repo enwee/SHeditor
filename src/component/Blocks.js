@@ -3,24 +3,41 @@ import { Segment, Label } from "semantic-ui-react";
 import CKEditor from "@ckeditor/ckeditor5-react";
 import CustomCKEditor from "@enwee/ckeditor5-build-balloon-block";
 import ckeditor5Config from "../constants/ckeditor5Config";
-import TooltipBtn from "./TooltipBtn";
+import ButtonsBar from "./ButtonsBar";
 import { v4 as uuidv4 } from "uuid";
 
-const Blocks = ({
-  isEditable,
-  topicSubtopicArray,
-  blockArray,
-  updateArticleState
-}) => {
+const Blocks = ({ isEditable, topicArray, blockArray, updateArticleState }) => {
+  const blockChange = (value, index) => {
+    blockArray[index].ckString = value;
+    updateArticleState(topicArray);
+  };
+
+  const addBlock = index => {
+    blockArray.splice(index + 1, 0, { ckString: "", uuid: uuidv4() });
+    updateArticleState(topicArray);
+  };
+
+  const deleteBlock = index => {
+    blockArray.splice(index, 1);
+    updateArticleState(topicArray);
+  };
+
+  const blockUp = index => {
+    [blockArray[index - 1], blockArray[index]] = 
+    [blockArray[index], blockArray[index - 1]]; //prettier-ignore
+    updateArticleState(topicArray);
+  };
+
+  const blockDown = index => {
+    [blockArray[index], blockArray[index + 1]] = 
+    [blockArray[index + 1], blockArray[index]]; //prettier-ignore
+    updateArticleState(topicArray);
+  };
+
   const jsxArray = blockArray.map((block, blockIndex) => {
-    const showDelete = Boolean(isEditable && blockIndex);
     return (
       <Segment key={block.uuid}>
-        {isEditable && (
-          <Label color="blue" ribbon>
-            Block
-          </Label>
-        )}
+        {isEditable && <Label color="blue" ribbon content="Block" />}
         <CKEditor
           editor={CustomCKEditor}
           config={ckeditor5Config}
@@ -30,39 +47,19 @@ const Blocks = ({
             blockChange(editor.getData(), blockIndex)
           }
         />
-        {isEditable && (
-          <TooltipBtn
-            ttText="Add Block"
-            icon="plus circle"
-            onClick={() => addBlock(blockIndex)}
-          />
-        )}
-        {showDelete && (
-          <TooltipBtn
-            ttText="Delete Block"
-            icon="trash"
-            onClick={() => deleteBlock(blockIndex)}
-          />
-        )}
+        <ButtonsBar
+          isEditable={isEditable}
+          type="Block"
+          index={blockIndex}
+          lastIndex={blockArray.length - 1}
+          add={addBlock}
+          remove={deleteBlock}
+          moveUp={blockUp}
+          moveDown={blockDown}
+        />
       </Segment>
     );
   });
-
-  const blockChange = (value, index) => {
-    blockArray[index].ckString = value;
-    updateArticleState(topicSubtopicArray);
-  };
-
-  const addBlock = index => {
-    blockArray.splice(index + 1, 0, { ckString: "", uuid: uuidv4() });
-    updateArticleState(topicSubtopicArray);
-  };
-
-  const deleteBlock = index => {
-    blockArray.splice(index, 1);
-    updateArticleState(topicSubtopicArray);
-  };
-
   return jsxArray;
 };
 
