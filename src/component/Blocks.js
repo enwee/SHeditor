@@ -47,16 +47,17 @@ const Blocks = ({ isEditable, topicArray, blockArray, updateArticleState }) => {
             blockChange(editor.getData(), blockIndex)
           }
         />
-        <ButtonsBar
-          isEditable={isEditable}
-          type="Block"
-          index={blockIndex}
-          lastIndex={blockArray.length - 1}
-          add={addBlock}
-          remove={deleteBlock}
-          moveUp={blockUp}
-          moveDown={blockDown}
-        />
+        {isEditable && (
+          <ButtonsBar
+            type="Block"
+            index={blockIndex}
+            lastIndex={blockArray.length - 1}
+            add={addBlock}
+            remove={deleteBlock}
+            moveUp={blockUp}
+            moveDown={blockDown}
+          />
+        )}
       </Segment>
     );
   });

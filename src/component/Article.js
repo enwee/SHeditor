@@ -71,16 +71,17 @@ const Article = ({ isEditable, topicArray, updateArticleState }) => {
           ) : (
             <Header size={topicIndex ? "medium" : "large"}>{name}</Header>
           )}
-          <ButtonsBar
-            isEditable={isEditable}
-            type="Subtopic"
-            index={topicIndex}
-            lastIndex={topicArray.length - 1}
-            add={addTopic}
-            remove={deleteTopic}
-            moveUp={topicUp}
-            moveDown={topicDown}
-          />
+          {isEditable && (
+            <ButtonsBar
+              type="Subtopic"
+              index={topicIndex}
+              lastIndex={topicArray.length - 1}
+              add={addTopic}
+              remove={deleteTopic}
+              moveUp={topicUp}
+              moveDown={topicDown}
+            />
+          )}
         </Segment>
         <Blocks
           isEditable={isEditable}

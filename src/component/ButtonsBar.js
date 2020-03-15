@@ -3,7 +3,6 @@ import { Container } from "semantic-ui-react";
 import TooltipBtn from "./TooltipBtn";
 
 const ButtonsBar = ({
-  isEditable,
   type,
   index,
   lastIndex,
@@ -12,35 +11,31 @@ const ButtonsBar = ({
   moveUp,
   moveDown
 }) => {
-  const firstBlock = index === 0;
-  const lastBlock = index === lastIndex;
-  const showDeleteUp = isEditable && !firstBlock;
-  const showDown = isEditable && !lastBlock;
-  const isTopic = firstBlock && type === "Subtopic";
+  const firstElement = index === 0;
+  const lastElement = index === lastIndex;
+  const isTopic = firstElement && type === "Subtopic";
   return (
     <Container>
-      {isEditable && (
-        <TooltipBtn
-          ttText={`Add ${type}`}
-          icon="plus circle"
-          onClick={() => add(index)}
-        />
-      )}
-      {showDeleteUp && (
+      <TooltipBtn
+        ttText={`Add ${type}`}
+        icon="plus circle"
+        onClick={() => add(index)}
+      />
+      {!firstElement && (
         <TooltipBtn
           ttText={`Delete ${type}`}
           icon="trash"
           onClick={() => remove(index)}
         />
       )}
-      {showDeleteUp && (
+      {!firstElement && (
         <TooltipBtn
           ttText={`Move ${type} Up`}
           icon="arrow up"
           onClick={() => moveUp(index)}
         />
       )}
-      {showDown && (
+      {!lastElement && (
         <TooltipBtn
           ttText={isTopic ? "Move Topic Down" : `Move ${type} Down`}
           icon="arrow down"
