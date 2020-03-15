@@ -1,5 +1,5 @@
 import React from "react";
-import { Container, Menu, Divider } from "semantic-ui-react";
+import { Container, Menu } from "semantic-ui-react";
 import TooltipBtn from "./TooltipBtn";
 
 const Header = ({ showEditor, toggleEditable, isEditable }) => {
@@ -42,7 +42,6 @@ const Header = ({ showEditor, toggleEditable, isEditable }) => {
           />
         </Menu.Item>
       </Menu>
-      <Divider hidden section />
     </Container>
   );
 };

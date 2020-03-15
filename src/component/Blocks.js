@@ -1,7 +1,7 @@
 import React from "react";
 import { Segment, Label } from "semantic-ui-react";
 import CKEditor from "@ckeditor/ckeditor5-react";
-import Editor from "@enwee/ckeditor5-build-balloon-block";
+import CustomCKEditor from "@enwee/ckeditor5-build-balloon-block";
 import ckeditor5Config from "../constants/ckeditor5Config";
 import TooltipBtn from "./TooltipBtn";
 import { v4 as uuidv4 } from "uuid";
@@ -22,7 +22,7 @@ const Blocks = ({
           </Label>
         )}
         <CKEditor
-          editor={Editor}
+          editor={CustomCKEditor}
           config={ckeditor5Config}
           data={block.ckString}
           disabled={!isEditable}

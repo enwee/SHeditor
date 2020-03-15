@@ -1,5 +1,5 @@
 import React from "react";
-import { Container } from "semantic-ui-react";
+import { Container, Divider } from "semantic-ui-react";
 import Article from "../component/Article";
 import Header from "../component/Header";
 import testLongString from "../testData/testLongString";
@@ -61,11 +61,13 @@ class Editor extends React.Component {
           toggleEditable={this.toggleEditable}
           isEditable={this.state.isEditable}
         />
+        <Divider hidden section />
         <Article
           isEditable={this.state.isEditable}
           topicSubtopicArray={this.state.topicSubtopicArray}
           updateArticleState={this.updateArticleState}
         />
+        <Divider hidden section />
       </Container>
     );
   };
