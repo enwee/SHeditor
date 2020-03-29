@@ -55,18 +55,6 @@ const Article = ({ isEditable, topicArray, updateArticleState }) => {
                 value={name}
                 onChange={e => nameChange(e.target.value, topicIndex)}
               />
-              {/* <Input
-                  value={name}
-                  list="catergory"
-                  fluid
-                  placeholder="Choose or Enter new Cat"
-                  onChange={e => nameChange(e.target.value, topicIndex)}
-                />
-                <datalist id="catergory">
-                  {["English", "Chinese", "Dutch"].map(x => (
-                    <option value={x} />
-                  ))}
-                </datalist> */}
             </Container>
           ) : (
             <Header size={topicIndex ? "medium" : "large"}>{name}</Header>

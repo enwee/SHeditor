@@ -15,7 +15,15 @@ class App extends React.Component {
   }
 
   createNewArticle = () => {
-    this.setState({ showEditor: !this.state.showEditor, articleId: uuidv4() });
+    this.setState({ showEditor: true, articleId: uuidv4() });
+  };
+
+  editArticle = id => {
+    this.setState({ showEditor: true, articleId: id });
+  };
+
+  showDashboard = () => {
+    this.setState({ showEditor: false });
   };
 
   render = () => {
@@ -23,11 +31,14 @@ class App extends React.Component {
       <Container>
         {this.state.showEditor ? (
           <Editor
-            createNewArticle={this.createNewArticle}
+            showDashboard={this.showDashboard}
             articleId={this.state.articleId}
           />
         ) : (
-          <Dashboard createNewArticle={this.createNewArticle} />
+          <Dashboard
+            createNewArticle={this.createNewArticle}
+            editArticle={this.editArticle}
+          />
         )}
       </Container>
     );

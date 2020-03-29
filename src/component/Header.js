@@ -2,15 +2,15 @@ import React from "react";
 import { Container, Menu } from "semantic-ui-react";
 import TooltipBtn from "./TooltipBtn";
 
-const Header = ({ showEditor, toggleEditable, isEditable }) => {
+const Header = ({ showDashboard, toggleEditable, isEditable, saveDraft }) => {
   return (
     <Container>
       <Menu borderless inverted fixed="top" color="blue">
         <Menu.Item>
           <TooltipBtn
-            ttText="Back to Dashboard"
+            ttText="Back to Articles"
             icon="arrow alternate circle left"
-            onClick={showEditor}
+            onClick={showDashboard}
           />
         </Menu.Item>
         <Menu.Item>
@@ -24,7 +24,7 @@ const Header = ({ showEditor, toggleEditable, isEditable }) => {
         </Menu.Item>
         <Menu.Item>
           <TooltipBtn
-            ttText="Preview"
+            ttText="Preview Mode"
             icon="eye"
             toggle={true}
             active={!isEditable}
@@ -32,13 +32,18 @@ const Header = ({ showEditor, toggleEditable, isEditable }) => {
           />
         </Menu.Item>
         <Menu.Item position="right">
-          <TooltipBtn ttText="Publish" icon="file alternate" />
+          <TooltipBtn
+            ttText="Publish - Coming Soon!"
+            ttPosition="bottom right"
+            icon="file alternate"
+          />
         </Menu.Item>
         <Menu.Item>
           <TooltipBtn
             ttText="Save Draft"
             ttPosition="bottom right"
             icon="save"
+            onClick={saveDraft}
           />
         </Menu.Item>
       </Menu>
