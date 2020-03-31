@@ -1,6 +1,6 @@
 import React from "react";
 import axios from "axios";
-import { Container, Header, Button, Segment } from "semantic-ui-react";
+import { Container, Header, Button, Segment, Loader } from "semantic-ui-react";
 import TooltipBtn from "../component/TooltipBtn";
 import backEndUrl from "../constants/urls";
 
@@ -8,14 +8,15 @@ class Dashboard extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      articleList: [{ title: "Loading - 20sec if server asleep" }]
+      articleList: [{ title: "Loading" }],
+      isLoading: true
     };
   }
 
   getArticleList = () => {
     axios(`${backEndUrl}/drafts`)
       .then(({ data }) => {
-        this.setState(() => ({ articleList: data }));
+        this.setState(() => ({ articleList: data, isLoading: false }));
       })
       .catch(error => {
         console.log("getArticleList>>>", error);
@@ -29,6 +30,7 @@ class Dashboard extends React.Component {
 
   render = () => {
     const { createNewArticle, editArticle } = this.props;
+    const { articleList, isLoading } = this.state;
     return (
       <Container textAlign="center">
         <Header as="h1">Articles</Header>
@@ -38,10 +40,12 @@ class Dashboard extends React.Component {
           onClick={createNewArticle}
           aria-label="Create New Article"
         />
-        {this.state.articleList.map((article, index) => (
+        {articleList.map((article, index) => (
           <Segment key={index}>
+            <Loader active={isLoading} />
             <Button
               content={article.title}
+              disabled={isLoading}
               onClick={() => editArticle(article.uuid)}
             />
           </Segment>

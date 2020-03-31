@@ -2,7 +2,7 @@ import React from "react";
 import axios from "axios";
 import { v4 as uuidv4 } from "uuid";
 import backEndUrl from "../constants/urls";
-import { Container, Divider } from "semantic-ui-react";
+import { Container, Divider, Dimmer, Loader } from "semantic-ui-react";
 import Article from "../component/Article";
 import Header from "../component/Header";
 
@@ -11,6 +11,7 @@ class Editor extends React.Component {
     super(props);
     this.state = {
       isEditable: true,
+      isLoading: true,
       topicArray: [
         {
           uuid: uuidv4(),
@@ -38,12 +39,14 @@ class Editor extends React.Component {
     axios
       .get(`${backEndUrl}/drafts/${this.props.articleId}`)
       .then(({ data }) => {
-        if (data) this.setState(() => ({ topicArray: data.topicArray }));
+        if (data) this.setState({ topicArray: data.topicArray });
       })
       .catch(error => {
         console.log("getArticle>>>", error);
       })
-      .finally(() => {}); // always executed
+      .finally(() => {
+        this.setState({ isLoading: false });
+      });
   };
 
   saveDraft = () => {
@@ -77,6 +80,9 @@ class Editor extends React.Component {
           saveDraft={this.saveDraft}
         />
         <Divider hidden section />
+        <Dimmer active={this.state.isLoading}>
+          <Loader content="Loading" />
+        </Dimmer>
         <Article
           isEditable={this.state.isEditable}
           topicArray={this.state.topicArray}
