@@ -32,12 +32,13 @@ The app now runs in development mode at http://localhost:3000
 
 The repository for the REST API server is at https://github.com/enwee/shedit-server
 
-## Work in Progress / Todo
+## Work in Progress / Todo / Notes
 
-- loading spinners/ modals
-- saving spinners/ modals
+- save images to AWS S3 bucket
 - last updated info
 - delete article
-- merge articles page with editor as sliding menu
 - publish function / reader page
-- save images to AWS S3 bucket
+- merge articles page with editor as sliding menu
+
+1. Images presently stored as BASE64 string in DB, uncached first load with images is very slow
+1. Free-tier sandbox server goes to sleep and takes ~30secs for wakeup
