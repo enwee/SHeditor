@@ -6,32 +6,32 @@ import ckeditor5Config from "../constants/ckeditor5Config";
 import ButtonsBar from "./ButtonsBar";
 import { v4 as uuidv4 } from "uuid";
 
-const Blocks = ({ isEditable, topicArray, blockArray, updateArticleState }) => {
+const Block = ({ isEditable, topicArray, blockArray, updateArticle }) => {
   const blockChange = (value, index) => {
     blockArray[index].ckString = value;
-    updateArticleState(topicArray);
+    updateArticle(topicArray);
   };
 
   const addBlock = index => {
     blockArray.splice(index + 1, 0, { ckString: "", uuid: uuidv4() });
-    updateArticleState(topicArray);
+    updateArticle(topicArray);
   };
 
   const deleteBlock = index => {
     blockArray.splice(index, 1);
-    updateArticleState(topicArray);
+    updateArticle(topicArray);
   };
 
   const blockUp = index => {
     [blockArray[index - 1], blockArray[index]] = 
     [blockArray[index], blockArray[index - 1]]; //prettier-ignore
-    updateArticleState(topicArray);
+    updateArticle(topicArray);
   };
 
   const blockDown = index => {
     [blockArray[index], blockArray[index + 1]] = 
     [blockArray[index + 1], blockArray[index]]; //prettier-ignore
-    updateArticleState(topicArray);
+    updateArticle(topicArray);
   };
 
   const jsxArray = blockArray.map((block, blockIndex) => {
@@ -66,4 +66,4 @@ const Blocks = ({ isEditable, topicArray, blockArray, updateArticleState }) => {
   return jsxArray;
 };
 
-export default Blocks;
+export default Block;

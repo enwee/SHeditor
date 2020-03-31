@@ -1,8 +1,16 @@
 import React from "react";
-import { Container, Menu } from "semantic-ui-react";
+import { Container, Menu, Loader } from "semantic-ui-react";
 import TooltipBtn from "./TooltipBtn";
 
-const Header = ({ showDashboard, toggleEditable, isEditable, saveDraft }) => {
+const Header = ({
+  showDashboard,
+  toggleEditable,
+  isEditable,
+  changeMade,
+  isSaving,
+  warnUnsaved,
+  saveDraft
+}) => {
   return (
     <Container>
       <Menu borderless inverted fixed="top" color="blue">
@@ -10,7 +18,13 @@ const Header = ({ showDashboard, toggleEditable, isEditable, saveDraft }) => {
           <TooltipBtn
             ttText="Back to Articles"
             icon="arrow alternate circle left"
-            onClick={showDashboard}
+            onClick={() => {
+              if (changeMade) {
+                warnUnsaved(true);
+              } else {
+                showDashboard();
+              }
+            }}
           />
         </Menu.Item>
         <Menu.Item>
@@ -43,8 +57,11 @@ const Header = ({ showDashboard, toggleEditable, isEditable, saveDraft }) => {
             ttText="Save Draft"
             ttPosition="bottom right"
             icon="save"
+            toggle={true}
+            active={changeMade}
             onClick={saveDraft}
           />
+          <Loader active={isSaving} inverted />
         </Menu.Item>
       </Menu>
     </Container>

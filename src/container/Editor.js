@@ -5,6 +5,7 @@ import backEndUrl from "../constants/urls";
 import { Container, Divider, Dimmer, Loader } from "semantic-ui-react";
 import Article from "../component/Article";
 import Header from "../component/Header";
+import WarnModal from "../component/WarnModal";
 
 class Editor extends React.Component {
   constructor(props) {
@@ -12,6 +13,10 @@ class Editor extends React.Component {
     this.state = {
       isEditable: true,
       isLoading: true,
+      changeMade: false,
+      warnUnsaved: false,
+      warnPayload: false,
+      isSaving: false,
       topicArray: [
         {
           uuid: uuidv4(),
@@ -27,12 +32,20 @@ class Editor extends React.Component {
     };
   }
 
-  updateArticleState = newtopicArray => {
-    this.setState({ topicArray: newtopicArray });
+  updateArticle = newtopicArray => {
+    this.setState({ topicArray: newtopicArray, changeMade: true });
   };
 
   toggleEditable = isEditable => {
     this.setState({ isEditable });
+  };
+
+  warnUnsaved = warnUnsaved => {
+    this.setState({ warnUnsaved });
+  };
+
+  warnPayload = warnPayload => {
+    this.setState({ warnPayload });
   };
 
   getArticle = () => {
@@ -55,15 +68,19 @@ class Editor extends React.Component {
       title: this.state.topicArray[0].name,
       topicArray: this.state.topicArray
     };
+    this.setState({ isSaving: true });
     axios
       .put(`${backEndUrl}/drafts/${this.props.articleId}`, article)
-      .then(({ data }) => {
-        //this.setState(() => ({ articleList: data }));
+      .then(() => {
+        this.setState({ changeMade: false });
       })
       .catch(error => {
+        if (error.response.status === 413) {
+          this.setState({ warnPayload: true });
+        }
         console.log("saveDraft>>>", error);
       })
-      .finally(() => {}); // always executed
+      .finally(() => this.setState({ isSaving: false }));
   };
 
   componentDidMount = () => {
@@ -71,24 +88,50 @@ class Editor extends React.Component {
   };
 
   render = () => {
+    const { showDashboard } = this.props;
+    const {
+      isEditable,
+      isLoading,
+      changeMade,
+      isSaving,
+      warnUnsaved,
+      warnPayload,
+      topicArray
+    } = this.state;
     return (
       <Container>
         <Header
-          showDashboard={this.props.showDashboard}
+          showDashboard={showDashboard}
           toggleEditable={this.toggleEditable}
-          isEditable={this.state.isEditable}
+          isEditable={isEditable}
+          changeMade={changeMade}
+          isSaving={isSaving}
+          warnUnsaved={this.warnUnsaved}
           saveDraft={this.saveDraft}
         />
         <Divider hidden section />
-        <Dimmer active={this.state.isLoading}>
+        <Dimmer active={isLoading}>
           <Loader content="Loading" />
         </Dimmer>
         <Article
-          isEditable={this.state.isEditable}
-          topicArray={this.state.topicArray}
-          updateArticleState={this.updateArticleState}
+          isEditable={isEditable}
+          topicArray={topicArray}
+          updateArticle={this.updateArticle}
         />
         <Divider hidden section />
+        <WarnModal
+          open={warnUnsaved}
+          header="Unsaved Changes"
+          content="Changes will be lost. Are you Sure?"
+          clickOk={showDashboard}
+          clickCancel={() => this.warnUnsaved(false)}
+        />
+        <WarnModal
+          open={warnPayload}
+          header="Cannot Save Article"
+          content="The Article has exceeded data payload size limit. It is likely image(s) used have large file size. Use image(s) of smaller file size."
+          clickOk={() => this.warnPayload(false)}
+        />
       </Container>
     );
   };

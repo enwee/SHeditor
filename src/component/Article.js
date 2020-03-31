@@ -1,13 +1,13 @@
 import React from "react";
 import { Segment, Input, Header, Label, Container } from "semantic-ui-react";
 import ButtonsBar from "./ButtonsBar";
-import Blocks from "../component/Blocks";
+import Block from "./Block";
 import { v4 as uuidv4 } from "uuid";
 
-const Article = ({ isEditable, topicArray, updateArticleState }) => {
+const Article = ({ isEditable, topicArray, updateArticle }) => {
   const nameChange = (value, index) => {
     topicArray[index].name = value;
-    updateArticleState(topicArray);
+    updateArticle(topicArray);
   };
 
   const addTopic = index => {
@@ -16,50 +16,46 @@ const Article = ({ isEditable, topicArray, updateArticleState }) => {
       name: "",
       blockArray: [{ ckString: "", uuid: uuidv4() }]
     });
-    updateArticleState(topicArray);
+    updateArticle(topicArray);
   };
 
   const deleteTopic = index => {
     topicArray.splice(index, 1);
-    updateArticleState(topicArray);
+    updateArticle(topicArray);
   };
 
   const topicUp = index => {
     [topicArray[index - 1], topicArray[index]] = 
     [topicArray[index], topicArray[index - 1]]; //prettier-ignore
-    updateArticleState(topicArray);
+    updateArticle(topicArray);
   };
 
   const topicDown = index => {
     [topicArray[index], topicArray[index + 1]] = 
     [topicArray[index + 1], topicArray[index]]; //prettier-ignore
-    updateArticleState(topicArray);
+    updateArticle(topicArray);
   };
 
   const jsxArray = topicArray.map((topic, topicIndex) => {
     const { name, uuid, blockArray } = topic;
+    const isFirstTopic = !Boolean(topicIndex);
     return (
       <Segment key={uuid}>
         <Segment>
           {isEditable ? (
             <Container>
-              <Label
-                color="blue"
-                ribbon
-                size={topicIndex ? "large" : "big"}
-                content={
-                  topicIndex ? `SUBTOPIC ${topicIndex} TITLE` : "TOPIC TITLE"
-                }
-              />
+              <Label color="blue" ribbon size={isFirstTopic ? "big" : "large"}>
+                {isFirstTopic ? "TOPIC" : `SUBTOPIC ${topicIndex}`} TITLE
+              </Label>
               <Input
-                size={topicIndex ? "big" : "massive"}
+                size={isFirstTopic ? "massive" : "big"}
                 fluid
                 value={name}
                 onChange={e => nameChange(e.target.value, topicIndex)}
               />
             </Container>
           ) : (
-            <Header size={topicIndex ? "medium" : "large"}>{name}</Header>
+            <Header size={isFirstTopic ? "large" : "medium"}>{name}</Header>
           )}
           {isEditable && (
             <ButtonsBar
@@ -73,11 +69,11 @@ const Article = ({ isEditable, topicArray, updateArticleState }) => {
             />
           )}
         </Segment>
-        <Blocks
+        <Block
           isEditable={isEditable}
           topicArray={topicArray}
           blockArray={blockArray}
-          updateArticleState={updateArticleState}
+          updateArticle={updateArticle}
         />
       </Segment>
     );
